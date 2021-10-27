@@ -2,7 +2,6 @@ import React, { lazy, Suspense, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from './store/store';
 import loadable from '@loadable/component';
-import './App.css';
 
 const Navbar = loadable(() => import('./components/Navbar/Navbar'));
 const PicOfTheDay = loadable(() => import('./components/PicOfTheDay/PicOfTheDay'));
