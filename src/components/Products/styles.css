@@ -1,0 +1,168 @@
+.allProducts {
+    margin: 6.8rem 9rem;
+    padding: 0;
+}
+
+.allProducts-title {
+    margin-bottom: 6.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.allProducts-title span {
+    color: #9B9B9B;
+    font-size: inherit;
+    font-weight: 400;
+    margin-left: .5rem;
+}
+
+.allProducts .content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.filter-icon {
+    height: 2.9rem;
+    width: 2.9rem;
+    margin-left: auto;
+    display: none;
+    text-decoration: none;
+}
+
+
+/* POPUP */
+
+.overlay {
+    background: rgba(0, 0, 0, 0.7);
+    bottom: 0;
+    display: none;
+    left: 0;
+    max-height: calc(100% - 7rem);
+    position: fixed;
+    right: 0;
+    top: 0;
+    transition: opacity 500ms;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    width: 100vw;
+    z-index: 999;
+    box-sizing: border-box;
+}
+
+.popup {
+    background: #fff;
+    border-radius: 0;
+    margin: 0;
+    position: relative;
+    transition: all 5s ease-in-out;
+}
+
+.popup .close {
+    color: #000;
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    transition: all 200ms;
+    z-index: 9999;
+}
+
+.popup .close svg {
+    cursor: pointer;
+    height: 2rem;
+    stroke-width: 5rem;
+    width: 2rem;
+}
+
+.popup .close svg:hover {
+    color: rgba(0, 0, 0, .5);
+}
+
+.popup .buttons {
+    background-color: #fff;
+    border-top: .4rem solid #E4E4E4;
+    bottom: 0;
+    display: flex;
+    height: 7rem;
+    justify-content: space-around;
+    left: 0;
+    padding-top: 3rem;
+    position: fixed;
+    width: 100%;
+    z-index: 99;
+}
+
+.popup .buttons .save,
+.popup .buttons .clear {
+    width: 40%;
+}
+
+.popup .buttons .save button,
+.popup .buttons .clear button {
+    border: none;
+    border-radius: 0;
+    font-size: 2.3rem;
+    font-weight: 500;
+    height: 80%;
+    width: 100%;
+}
+
+.popup .buttons .save button {
+    background-color: #000;
+    color: #fff;
+}
+
+.popup .buttons .clear button {
+    background-color: #fff;
+    border: .2rem solid #000;
+    color: #000;
+}
+
+.sortBy-button {
+    color: #9b9b9b;
+    font-size: 2.2rem;
+    font-weight: 400;
+    margin-left: auto;
+}
+
+.sortBy-button>svg {
+    color: #000;
+    height: 1.5rem;
+    margin-right: .5rem;
+    width: 1.5rem;
+}
+
+.sortBy-button select {
+    border: none;
+    color: #000;
+    cursor: pointer;
+    font-size: 2.2rem;
+    outline: none;
+}
+
+.sortBy-button select option {
+    font-size: 2.2rem;
+}
+
+@media screen and (max-width: 767px) {
+    .allProducts {
+        margin: 0;
+        padding: 1.4rem;
+    }
+    .allProducts-title,
+    .allProducts-title span {
+        font-size: 1.8rem;
+    }
+    .allProducts-title {
+        margin-bottom: 3rem;
+        flex-wrap: wrap;
+    }
+    .filter-icon {
+        display: block;
+    }
+    .sortBy-button {
+        margin-top: 2rem;
+        text-align: end;
+    }
+}
