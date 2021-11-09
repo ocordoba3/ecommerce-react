@@ -3,13 +3,15 @@ import { createSlice } from '@reduxjs/toolkit';
 export type sortOrder = 'asc' | 'desc';
 export type sortType = 'name' | 'price';
 export type priceRange = 'low20' | '20-100' | '100-200' | 'more200';
-
+export type themeType = 'light' | 'dark';
 export interface Ui {
     isModalOpen: boolean,
     isCartOpen: boolean,
     sortBy:[sortOrder, sortType],
     categoryFilter: string[],
-    priceRange: Array<priceRange>
+    priceRange: Array<priceRange>,
+    theme: themeType,
+    isLightMode: boolean
 }
 
 const initialState: Ui = {
@@ -18,6 +20,8 @@ const initialState: Ui = {
     sortBy: ['asc', 'price'],
     categoryFilter: [],
     priceRange: [],
+    theme: 'light',
+    isLightMode: true
 }
 
 export const uiSlice = createSlice({
@@ -38,10 +42,19 @@ export const uiSlice = createSlice({
         },
         setPriceRange: (state, data: any) => {
             state.priceRange = data.payload;
-        }
+        },
+        setTheme: (state, data: any) => {
+            if(state.theme === data.payload) {
+                return;
+            }
+            state.theme = data.payload;
+        },
+        setIsLightMode: (state, data: any) => {
+            state.isLightMode = data.payload;
+        },
     },
 })
 
-export const { setIsModalOpen, setIsCartOpen, setSortyByFilters, setCategoryFilters, setPriceRange } = uiSlice.actions
+export const { setIsModalOpen, setIsCartOpen, setSortyByFilters, setCategoryFilters, setPriceRange, setTheme, setIsLightMode } = uiSlice.actions
 
 export default uiSlice.reducer

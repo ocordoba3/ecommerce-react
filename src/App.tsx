@@ -1,14 +1,14 @@
 import React, { lazy, Suspense, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from './store/store';
-import loadable from '@loadable/component';
+import { GlobalStyles } from './GlobalStyles';
 
-const Navbar = loadable(() => import('./components/Navbar/Navbar'));
-const PicOfTheDay = loadable(() => import('./components/PicOfTheDay/PicOfTheDay'));
+const Navbar = lazy(() => import('./components/Navbar/Navbar'));
+const PicOfTheDay = lazy(() => import('./components/PicOfTheDay/PicOfTheDay'));
 const Products = lazy(() => import('./components/Products/Products'));
 
 const App = () => {
-  const { isModalOpen } = useSelector((state: RootState) => state.ui);
+  const { isModalOpen, isLightMode } = useSelector((state: RootState) => state.ui);
 
   useEffect(() => {
     if (isModalOpen) {
@@ -27,9 +27,10 @@ const App = () => {
   );
   return (
     <>
-      <Navbar />
-      <PicOfTheDay />
       <Suspense fallback={renderLoader()}>
+        <GlobalStyles isLightMode={isLightMode} />
+        <Navbar />
+        <PicOfTheDay />
         <Products />
       </Suspense>
     </>

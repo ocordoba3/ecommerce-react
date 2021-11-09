@@ -1,21 +1,26 @@
+// Required imports
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+// Helpers
 import { getFeaturedProduct } from '../../helpers/fetchData';
 import { toCamelCase } from '../../helpers/toCamelCase';
+// Store and reducers
+import { RootState } from '../../store/store';
 import { addToCart } from '../../reducers/cart/cartSlice';
 import { setIsCartOpen } from '../../reducers/ui/uiSlice';
-import { RootState } from '../../store/store';
-import './styles.css';
+// Components
+import { Header, Information, Photo, PicDaySection } from './styles';
+import { DEFAULT_TEXT } from '../../consts';
 
 const PicOfTheDay = () => {
 
     const dispatch = useDispatch();
+    const { featuredProduct, products } = useSelector((state: RootState) => state.products);
+    const { isLightMode } = useSelector((state: RootState) => state.ui);
 
     useEffect(() => {
         dispatch(getFeaturedProduct());
     }, [dispatch]);
-
-    const { featuredProduct, products } = useSelector((state: RootState) => state.products);
 
     const handleAdd = () => {
         dispatch(setIsCartOpen(true));
@@ -26,26 +31,26 @@ const PicOfTheDay = () => {
         <>
             {
                 featuredProduct && products &&
-                <article className="picDaySection animate__animated animate__fadeIn">
-                    <div className="header">
-                        <h1 className="picTitle">{featuredProduct?.name}</h1>
-                        <button type="button" className="addCartButtonDesktop" onClick={handleAdd}>ADD TO CART</button>
-                    </div>
-                    <div className="picOfDay">
+                <PicDaySection isLightMode={isLightMode} className="animate__animated animate__fadeIn">
+                    <Header isLightMode={isLightMode}>
+                        <h1>{featuredProduct?.name} <small>({toCamelCase(featuredProduct?.category || '')})</small></h1>
+                        <button type="button" onClick={handleAdd}>ADD TO CART</button>
+                    </Header>
+                    <Photo isLightMode={isLightMode}>
                         <img src={featuredProduct?.image.src} alt={featuredProduct?.name} />
-                        <button type="button" className="addCartButtonMobile" onClick={handleAdd}>ADD TO CART</button>
-                        <h4>Photo of the day</h4>
-                    </div>
-                    <div className="other">
+                        <button type="button" onClick={handleAdd}>ADD TO CART</button>
+                        <h3>Photo of the day</h3>
+                    </Photo>
+                    <Information>
                         <div className="aboutPic">
-                            <h4>About {featuredProduct?.name}</h4>
-                            <span className="category">{toCamelCase(featuredProduct?.category || '')}</span>
-                            <p>So how did the classical Latin become so incoherent? According to McClintock, a 15th century typesetter likely scrambled part of Cicero's De Finibus in order to provide placeholder text to mockup various fonts for a type specimen book.So how did the classical Latin become so incoherent? According to McClintock, a 15th century typesetter likely scrambled part of Cicero's De Finibus in order to provide placeholder
-
-                                text to mockup various fonts for a type specimen book.So how did the classical Latin become so incoherent? According to McClintock.</p>
+                            <h2>About it</h2>
+                            <p>{DEFAULT_TEXT}</p>
+                            <h2>Details</h2>
+                            <p>Dimentions: {featuredProduct?.details?.dimmentions?.width} x {featuredProduct?.details?.dimmentions?.height}pixels</p>
+                            <p>Size: {featuredProduct?.details.size / 1000}MB</p>
                         </div>
                         <div className="otherDetails">
-                            <h4>People also buy</h4>
+                            <h2>People also buy</h2>
                             <div className="otherBuys">
                                 {
                                     products?.slice(0, 3)?.map(product => (
@@ -53,12 +58,9 @@ const PicOfTheDay = () => {
                                     ))
                                 }
                             </div>
-                            <h4>Details</h4>
-                            <p>Dimentions: {featuredProduct?.details?.dimmentions?.width} x {featuredProduct?.details?.dimmentions?.height}pixels</p>
-                            <p>Size: {featuredProduct?.details.size / 1000}MB</p>
                         </div>
-                    </div>
-                </article>
+                    </Information>
+                </PicDaySection>
             }
         </>
     )

@@ -1,78 +1,58 @@
-import loadable from '@loadable/component';
+// Required imports
 import React from 'react';
-import { AiOutlineClose } from 'react-icons/ai';
-import { FaSortAlphaDown, FaSortAlphaDownAlt } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
+// Hooks
 import { useWindowSize } from '../../hooks/useWindowSize';
-import { setCategoryFilters, setIsModalOpen, setPriceRange, setSortyByFilters, sortOrder, sortType } from '../../reducers/ui/uiSlice';
+// Store and reducers
 import { RootState } from '../../store/store';
+import { setIsModalOpen, setSortyByFilters, sortOrder, sortType } from '../../reducers/ui/uiSlice';
+// Components
 import { Filters } from '../Filters/Filters';
-import './styles.css';
-
-const Pagination = loadable(() => import('../Pagination/Pagination'));
-
+import { Popup } from '../Popup/Popup';
+import ProductsList from '../ProductsList/ProductsList';
+import { FaSortAlphaDown, FaSortAlphaDownAlt } from 'react-icons/fa';
+import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
+import { BiFilter } from 'react-icons/bi';
+import { ProductsContainer, ProductsContent, ProductsHeader, SortContainer } from './styles';
 
 const Products = () => {
 
-    const { sortBy } = useSelector((state: RootState) => state.ui)
+    const { sortBy, isLightMode } = useSelector((state: RootState) => state.ui);
     const dispatch = useDispatch();
     const windowSize = useWindowSize();
 
     const openForm = () => {
         dispatch(setIsModalOpen(true));
-        (document.getElementById('popup1') as any).style.display = 'block';
-    }
-
-    const closePopup = () => {
-        dispatch(setIsModalOpen(false));
-        (document.getElementById('popup1') as any).style.display = 'none';
+        (document.getElementById('filterPopup') as any).style.display = 'block';
     }
 
     const handleSort = (sortOrder: sortOrder, sortType: sortType) => {
         dispatch(setSortyByFilters([sortOrder, sortType]));
     }
 
-    const handleResetFilters = () => {
-        dispatch(setCategoryFilters([]));
-        dispatch(setPriceRange([]));
-    }
-
     return (
-        <section className="allProducts">
-            <h1 className="allProducts-title">
-                Photography /
-                <span>Premium Photos</span>
-                <p className="filter-icon" onClick={() => openForm()}><img src="assets/filter-icon.svg" alt="filter-icon" /></p>
-                <p className="sortBy-button" style={{ fontSize: '2rem', marginLeft: 'auto' }}>
-                    {
-                        sortBy[0] === 'asc' ? <FaSortAlphaDown onClick={() => handleSort('desc', sortBy[1])} /> : <FaSortAlphaDownAlt onClick={() => handleSort('asc', sortBy[1])} />
-                    }
+        <ProductsContainer>
+            <ProductsHeader isLightMode={isLightMode}>
+                <h1> Products </h1>
+                <BiFilter className="filterMobile" size="2.9rem" onClick={() => openForm()}></BiFilter>
+                <SortContainer isLightMode={isLightMode}>
                     Sort by
                     <select title="select" defaultValue={sortBy[1]} onChange={({ target }: any) => handleSort(sortBy[0], target.value)}>
                         <option value="name">Name</option>
                         <option value="price">Price</option>
                     </select>
-                </p>
-            </h1>
-            <div className="content">
+                    <MdOutlineKeyboardArrowDown></MdOutlineKeyboardArrowDown>
+                    {
+                        sortBy[0] === 'asc' ? <FaSortAlphaDown onClick={() => handleSort('desc', sortBy[1])} /> : <FaSortAlphaDownAlt onClick={() => handleSort('asc', sortBy[1])} />
+                    }
+                </SortContainer>
+            </ProductsHeader>
+            <ProductsContent>
                 {windowSize.width > 767 && <Filters />}
-                <Pagination />
-            </div>
-            <div id="popup1" className="overlay">
-                <div className="popup">
-                    <div className="close" onClick={() => closePopup()}><AiOutlineClose /></div>
-                    <Filters />
-                    <div className="buttons">
-                        <div className="clear">
-                            <button type="button" onClick={() => handleResetFilters()}>CLEAR</button>
-                        </div>
-                        <div className="save">
-                            <button type="button" onClick={() => closePopup()}>SAVE</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                <ProductsList />
+            </ProductsContent>
+            <Popup></Popup>
+        </ProductsContainer>
     )
 }
 

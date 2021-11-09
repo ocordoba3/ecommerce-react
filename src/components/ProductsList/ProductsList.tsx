@@ -1,23 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { useDispatch, useSelector } from 'react-redux';
-import { getData } from '../../helpers/fetchData';
 import { filterByCategory, filterByPriceRange } from '../../helpers/filters';
 import { sortItems } from '../../helpers/sortItems';
-import { addPaginatedItems } from '../../reducers/products/productsSlice';
+import { addPaginatedItems, Product } from '../../reducers/products/productsSlice';
 import { RootState } from '../../store/store';
-import { ListOfProducts } from '../ListOfProducts/ListOfProducts';
-import './styles.css';
+import { ProductCard } from '../ProductCard/ProductCard';
+import { ContainerNoItems, ContainerProducts, ContainerProductsList, Pagination } from './styles';
 
-const Pagination = () => {
+const ProductsList = () => {
     const dispatch = useDispatch();
     const { sortBy, categoryFilter, priceRange } = useSelector((state: RootState) => state.ui);
-
-    useEffect(() => {
-        dispatch(getData(1));
-    }, [dispatch]);
-
-    const { products, paginatedItems, totalProducts } = useSelector((state: RootState) => state.products);
+    const { products, paginatedItems } = useSelector((state: RootState) => state.products);
     const itemsPerPage = 6;
     const [pageCount, setPageCount] = useState(0);
     const [actualPage, setActualPage] = useState(0);
@@ -34,15 +28,14 @@ const Pagination = () => {
             if (priceRange.length > 0) {
                 newArray = filterByPriceRange(newArray, priceRange);
             }
-            dispatch(addPaginatedItems(newArray));
-            setPageCount(totalProducts / itemsPerPage);
+            dispatch(addPaginatedItems(newArray.slice(actualPage * itemsPerPage, (actualPage + 1) * itemsPerPage)));
+            setPageCount(Math.ceil(newArray.length / itemsPerPage));
             setLoading(false);
         }
-    }, [categoryFilter, dispatch, products, itemsPerPage, priceRange, sortBy, totalProducts]);
+    }, [categoryFilter, dispatch, products, itemsPerPage, priceRange, sortBy, actualPage]);
 
     const handlePageClick = (selected: number) => {
-        dispatch(getData(selected + 1));
-        setActualPage(selected)
+        setActualPage(selected);
     };
 
     if (loading) {
@@ -56,37 +49,37 @@ const Pagination = () => {
     }
 
     return (
-        <div className="container-pagination animate__animated animate__fadeIn">
-
+        <ContainerProductsList className="animate__animated animate__fadeIn">
             {
                 paginatedItems.length > 0
                 &&
-                <>
-                    <ListOfProducts />
+                <ContainerProducts>
                     {
-                        categoryFilter.length === 0
-                        &&
-                        <div className="pagination">
-                            <ReactPaginate
-                                breakLabel="..."
-                                nextLabel={(actualPage / Math.round(pageCount)) === 1 ? "" : ">"}
-                                onPageChange={({ selected }) => handlePageClick(selected)}
-                                pageRangeDisplayed={3}
-                                pageCount={pageCount}
-                                previousLabel={actualPage !== 0 ? "<" : ""}
-                                marginPagesDisplayed={3}
-                            />
-                        </div>}
-                </>
+                        paginatedItems.map((item: Product) => (
+                            <ProductCard key={item.id} {...item} />
+                        ))
+                    }
+                </ContainerProducts>
             }
             {
                 paginatedItems.length === 0
                 &&
-                <div className="containerInfo">
+                <ContainerNoItems>
                     <h1>No items found</h1>
-                </div>
+                </ContainerNoItems>
             }
-        </ div>
+            <Pagination>
+                <ReactPaginate
+                    breakLabel="..."
+                    nextLabel={((actualPage + 1) / pageCount) === 1 ? "" : ">"}
+                    onPageChange={({ selected }) => handlePageClick(selected)}
+                    pageRangeDisplayed={3}
+                    pageCount={pageCount}
+                    previousLabel={actualPage !== 0 ? "<" : ""}
+                    marginPagesDisplayed={3}
+                />
+            </Pagination>
+        </ ContainerProductsList>
     );
 }
-export default Pagination;
+export default ProductsList;
