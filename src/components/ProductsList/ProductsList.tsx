@@ -8,9 +8,9 @@ import { RootState } from '../../store/store';
 import { ProductCard } from '../ProductCard/ProductCard';
 import { ContainerNoItems, ContainerProducts, ContainerProductsList, Pagination } from './styles';
 
-const ProductsList = () => {
+const ProductsList = () => {    
     const dispatch = useDispatch();
-    const { sortBy, categoryFilter, priceRange } = useSelector((state: RootState) => state.ui);
+    const { sortBy, categoryFilter, priceRange, isLightMode } = useSelector((state: RootState) => state.ui);
     const { products, paginatedItems } = useSelector((state: RootState) => state.products);
     const itemsPerPage = 6;
     const [pageCount, setPageCount] = useState(0);
@@ -36,6 +36,7 @@ const ProductsList = () => {
 
     const handlePageClick = (selected: number) => {
         setActualPage(selected);
+        document.getElementById('elementToScroll')?.scrollIntoView({behavior: "smooth"});
     };
 
     if (loading) {
@@ -68,7 +69,7 @@ const ProductsList = () => {
                     <h1>No items found</h1>
                 </ContainerNoItems>
             }
-            <Pagination>
+            <Pagination isLightMode={isLightMode}>
                 <ReactPaginate
                     breakLabel="..."
                     nextLabel={((actualPage + 1) / pageCount) === 1 ? "" : ">"}

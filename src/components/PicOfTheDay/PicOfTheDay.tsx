@@ -60,6 +60,7 @@ const PicOfTheDay = () => {
                             </div>
                         </div>
                     </Information>
+                    <div id="elementToScroll"></div>
                 </PicDaySection>
             }
         </>

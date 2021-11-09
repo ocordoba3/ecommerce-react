@@ -47,12 +47,11 @@ export const ContainerPopup = styled.div<ThemeTypes>`
     .popup .buttons {
         background-color: ${props => props.isLightMode ? SECONDARY_COLOR : PRIMARY_COLOR};
         border-top: .4rem solid ${props => props.isLightMode ? PRIMARY_COLOR : SECONDARY_COLOR};
-        bottom: 0;
         display: flex;
         height: 10rem;
         justify-content: space-around;
         left: 0;
-        padding-top: 3rem;
+        padding-top: 1rem;
         position: fixed;
         width: 100%;
         z-index: 1;
@@ -67,9 +66,9 @@ export const ContainerPopup = styled.div<ThemeTypes>`
     .popup .buttons .clear button {
         border: none;
         border-radius: 0;
-        font-size: 2.3rem;
+        font-size: 1.6rem;
         font-weight: 500;
-        height: 80%;
+        height: 50%;
         padding: 1rem;
         width: 100%;
     }

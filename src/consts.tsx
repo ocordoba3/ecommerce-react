@@ -21,6 +21,7 @@ export interface ThemeTypes {
 
 export const PRIMARY_COLOR = '#181818';
 export const SECONDARY_COLOR = '#eeeeee';
+export const TERTIARY_COLOR = '#6fa9d8';
 
 export const DEFAULT_TEXT = `So how did the classical Latin become so incoherent? According to McClintock, a 15th century typesetter 
 likely scrambled part of Cicero's De Finibus in order to provide placeholder

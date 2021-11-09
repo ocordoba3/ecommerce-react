@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { PRIMARY_COLOR, SECONDARY_COLOR, TERTIARY_COLOR, ThemeTypes } from "../../consts";
 
 export const ContainerProductsList = styled.section`
     display: flex;
@@ -22,7 +23,7 @@ export const ContainerProducts = styled.div`
     }
 `
 
-export const Pagination = styled.div`
+export const Pagination = styled.div<ThemeTypes>`
     width: 100%;
 
     ul {
@@ -33,7 +34,7 @@ export const Pagination = styled.div`
     }
 
     ul li {
-        color: #b4b4b4;
+        color: lighten(${props => props.isLightMode ? SECONDARY_COLOR : PRIMARY_COLOR});
         cursor: pointer;
         font-size: 2.9rem;
         list-style: none;
@@ -42,7 +43,7 @@ export const Pagination = styled.div`
     }
 
     ul li a[aria-current="page"] {
-        color: #000;
+        color: ${TERTIARY_COLOR};
         font-weight: 700;
     }
 `

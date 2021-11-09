@@ -23,7 +23,8 @@ export const Header = styled.header<ThemeTypes>`
         border-radius: 0;
         color: ${props => props.isLightMode ? SECONDARY_COLOR : PRIMARY_COLOR};
         cursor: pointer;
-        font-size: 2.3rem;
+        font-size: 1.6rem;
+        font-weight: 500;
         height: 5rem;
         padding: 1.3rem 4rem;
     }
@@ -67,9 +68,10 @@ export const Photo = styled.section<ThemeTypes>`
         color: ${props => props.isLightMode ? SECONDARY_COLOR : PRIMARY_COLOR};
         cursor: pointer;
         display: none;
-        font-size: 2.3rem;
+        font-size: 1.6rem;
+        font-weight: 500;
         height: 5rem;
-        margin-top: 3rem;
+        margin-top: 2rem;
         padding: 1.3rem 4rem;
         width: 100%;
     }

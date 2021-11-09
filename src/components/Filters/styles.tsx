@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { PRIMARY_COLOR, SECONDARY_COLOR, ThemeTypes } from "../../consts";
+import { PRIMARY_COLOR, SECONDARY_COLOR, TERTIARY_COLOR, ThemeTypes } from "../../consts";
 
 export const FiltersContainer = styled.aside<ThemeTypes>`
     display: flex;
@@ -46,7 +46,7 @@ export const FiltersContainer = styled.aside<ThemeTypes>`
 
     /* When the checkbox is checked, add a blue background */
     .container input:checked ~ .checkmark {
-        background-color: #6fa9d8;
+        background-color: ${TERTIARY_COLOR};
     }
 
     /* Create the checkmark/indicator (hidden when not checked) */

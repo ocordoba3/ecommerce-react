@@ -120,17 +120,21 @@ export const CartIconContainer = styled.div<ThemeTypes>`
 
 `
 export const CloseButton = styled.button<ThemeTypes>`
-    background-color: transparent;
+    ${fadeIn({time: '5s'})}
+    background-color: ${props => props.isLightMode ? SECONDARY_COLOR : PRIMARY_COLOR};
     border: none;
     color: ${props => props.isLightMode ? PRIMARY_COLOR : SECONDARY_COLOR};
     cursor: pointer;
+    display: flex;
     height: 3rem;
-    width: 100%;
-    text-align: end;
-    margin-top: 2rem;
+    justify-content: center;
+    width: auto;
+    padding: .5rem;
+    position: fixed;
+    right: 2rem;
+    top: 9rem;
     & svg {
         height: 2rem;
-        margin-right: 2rem;
         stroke-width: 5rem;
         width: 2rem;
     }
@@ -141,14 +145,17 @@ export const ItemsContainer = styled.div<ThemeTypes>`
     border: .3rem solid ${props => props.isLightMode ? PRIMARY_COLOR : SECONDARY_COLOR};
     background-color: ${props => props.isLightMode ? SECONDARY_COLOR : PRIMARY_COLOR};
     border-radius: 0;
-    height: auto;
+    height: calc(100vh - 10rem);
+    overflow-y: scroll;
     position: absolute;
     right: 0;
-    top: 4.8rem;
+    top: 5rem;
     width: 44rem;
     z-index: 3;
-    /*  */
 
+    &::-webkit-scrollbar {
+        display: none;
+    }
     & ul {
         padding: 2.4rem;
     }
@@ -225,7 +232,7 @@ export const ClearButton = styled.button<ThemeTypes>`
     border-radius: 0;
     color: ${props => props.isLightMode ? SECONDARY_COLOR : PRIMARY_COLOR};;
     cursor: pointer;
-    font-size: 2.3rem;
+    font-size: 1.6rem;
     font-weight: 500;
     padding: 1.4rem 5.2rem;
     width: 100%;
