@@ -44,16 +44,16 @@ export const ButtonTheme = styled.label<ThemeTypes>`
         cursor: pointer;
         left: 0;
         position: absolute;
-        right: 0;
+        right: 7px;
         top: 0;
         -webkit-transition: .4s;
         transition: .4s;
         svg {
             ${fadeIn({})}
             color: ${props => props.isLightMode ? PRIMARY_COLOR : SECONDARY_COLOR};
-            left: ${props => props.isLightMode ? '' : '3px'};
+            left: ${props => props.isLightMode ? '3px' : ''};
             position: absolute;
-            right: ${props => props.isLightMode ? '3px' : ''};
+            right: ${props => props.isLightMode ? '' : '3px'};
             top: 2px;
             z-index: 2 ;
         }
@@ -64,7 +64,7 @@ export const ButtonTheme = styled.label<ThemeTypes>`
         bottom: 2px;
         content: "";
         height: 26px;
-        left: ${props => props.isLightMode ? '4px' : '8px'};
+        left: ${props => props.isLightMode ? '4px' : '2px'};
         position: absolute;
         top: 2px;
         transition: .4s;
@@ -120,7 +120,6 @@ export const CartIconContainer = styled.div<ThemeTypes>`
 
 `
 export const CloseButton = styled.button<ThemeTypes>`
-    ${fadeIn({time: '5s'})}
     background-color: ${props => props.isLightMode ? SECONDARY_COLOR : PRIMARY_COLOR};
     border: none;
     color: ${props => props.isLightMode ? PRIMARY_COLOR : SECONDARY_COLOR};
@@ -131,13 +130,18 @@ export const CloseButton = styled.button<ThemeTypes>`
     width: auto;
     padding: .5rem;
     position: fixed;
-    right: 2rem;
-    top: 9rem;
+    right: 11rem;
+    top: 12rem;
     & svg {
         height: 2rem;
         stroke-width: 5rem;
         width: 2rem;
     }
+    @media screen and (max-width: 767px) {
+        right: 2rem;
+        top: 9rem;
+    }
+    
 `
 
 export const ItemsContainer = styled.div<ThemeTypes>`

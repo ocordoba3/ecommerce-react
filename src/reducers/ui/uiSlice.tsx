@@ -4,6 +4,9 @@ export type sortOrder = 'asc' | 'desc';
 export type sortType = 'name' | 'price';
 export type priceRange = 'low20' | '20-100' | '100-200' | 'more200';
 export type themeType = 'light' | 'dark';
+
+const themeStoraged = localStorage.getItem('isLightMode');
+const initialTheme = themeStoraged !== null ? JSON.parse(themeStoraged) : true;
 export interface Ui {
     isModalOpen: boolean,
     isCartOpen: boolean,
@@ -21,7 +24,7 @@ const initialState: Ui = {
     categoryFilter: [],
     priceRange: [],
     theme: 'light',
-    isLightMode: true
+    isLightMode: initialTheme
 }
 
 export const uiSlice = createSlice({

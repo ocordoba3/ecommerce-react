@@ -25,17 +25,21 @@ const Navbar = () => {
         dispatch(clearCart());
     }
 
+    const handleTheme = () => {
+        localStorage.setItem('isLightMode', JSON.stringify(!isLightMode));
+        dispatch(setIsLightMode(!isLightMode));
+    }
+
     return (
         <Nav isLightMode={isLightMode}>
             <Logo></Logo>
             <ButtonTheme isLightMode={isLightMode} >
-                <input type="checkbox" onClick={() => dispatch(setIsLightMode(!isLightMode))} />
+                <input defaultChecked={isLightMode}  type="checkbox" onClick={handleTheme} />
                 <span className="slider">
                     {
                         !isLightMode ? <BsFillMoonFill size="2.5rem" /> : <BsFillSunFill size="2.5rem"/>
                     }
-                </span>
-                
+                </span>              
             </ButtonTheme>
             <ContainerCart>
                 <CartIconContainer isLightMode={isLightMode} onClick={handleViewCartItems}>
