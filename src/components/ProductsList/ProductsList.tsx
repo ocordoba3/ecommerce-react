@@ -1,66 +1,70 @@
 import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { useDispatch, useSelector } from 'react-redux';
-import { filterByCategory, filterByPriceRange } from '../../helpers/filters';
+import { getData } from '../../helpers/fetchData';
+import { filterByPriceRange } from '../../helpers/filters';
 import { sortItems } from '../../helpers/sortItems';
-import { addPaginatedItems, Product } from '../../reducers/products/productsSlice';
+import { addPaginatedItems } from '../../reducers/products/productsSlice';
 import { RootState } from '../../store/store';
+import { Product } from '../../types';
 import { ProductCard } from '../ProductCard/ProductCard';
 import { ContainerNoItems, ContainerProducts, ContainerProductsList, Pagination } from './styles';
 
-const ProductsList = () => {    
+const ProductsList = () => {
     const dispatch = useDispatch();
-    const { sortBy, categoryFilter, priceRange, isLightMode } = useSelector((state: RootState) => state.ui);
-    const { products, paginatedItems } = useSelector((state: RootState) => state.products);
-    const itemsPerPage = 6;
+    const { sortBy, colorFilter, sizeFilter, priceRange, isLightMode } = useSelector((state: RootState) => state.ui);
+    const { products, paginatedItems, totalProducts } = useSelector((state: RootState) => state.products);
     const [pageCount, setPageCount] = useState(0);
     const [actualPage, setActualPage] = useState(0);
-    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        dispatch(getData(1, colorFilter, sizeFilter));
+    }, [colorFilter, dispatch, sizeFilter]);
 
     useEffect(() => {
         if (products && products.length > 0) {
+            const itemsPerPage = 6;
             let newArray = [...products];
             newArray = sortItems(newArray, sortBy);
-
-            if (categoryFilter.length > 0) {
-                newArray = filterByCategory(newArray, categoryFilter);
-            }
             if (priceRange.length > 0) {
                 newArray = filterByPriceRange(newArray, priceRange);
             }
-            dispatch(addPaginatedItems(newArray.slice(actualPage * itemsPerPage, (actualPage + 1) * itemsPerPage)));
-            setPageCount(Math.ceil(newArray.length / itemsPerPage));
-            setLoading(false);
+            dispatch(addPaginatedItems(newArray));
+            setPageCount(Math.ceil(totalProducts / itemsPerPage));
         }
-    }, [categoryFilter, dispatch, products, itemsPerPage, priceRange, sortBy, actualPage]);
+    }, [dispatch, products, sortBy, totalProducts, priceRange]);
 
     const handlePageClick = (selected: number) => {
+        dispatch(getData(selected + 1, colorFilter, sizeFilter));
         setActualPage(selected);
-        document.getElementById('elementToScroll')?.scrollIntoView({behavior: "smooth"});
+        window.scrollTo(0, 0);
     };
 
-    if (loading) {
-        return (
-            <div className="container-pagination animate__animated animate__fadeIn">
-                <div className="containerInfo">
-                    <h1>Loading...</h1>
-                </div>
-            </div>
-        )
-    }
-
     return (
-        <ContainerProductsList className="animate__animated animate__fadeIn">
+        <ContainerProductsList>
             {
                 paginatedItems.length > 0
                 &&
-                <ContainerProducts>
-                    {
-                        paginatedItems.map((item: Product) => (
-                            <ProductCard key={item.id} {...item} />
-                        ))
-                    }
-                </ContainerProducts>
+                <>
+                    <ContainerProducts>
+                        {
+                            paginatedItems.map((item: Product) => (
+                                <ProductCard key={item.id} {...item} />
+                            ))
+                        }
+                    </ContainerProducts>
+                    <Pagination isLightMode={isLightMode}>
+                        <ReactPaginate
+                            breakLabel="..."
+                            nextLabel={((actualPage + 1) / pageCount) === 1 ? "" : ">"}
+                            onPageChange={({ selected }) => handlePageClick(selected)}
+                            pageRangeDisplayed={3}
+                            pageCount={pageCount}
+                            previousLabel={actualPage !== 0 ? "<" : ""}
+                            marginPagesDisplayed={3}
+                        />
+                    </Pagination>
+                </>
             }
             {
                 paginatedItems.length === 0
@@ -69,17 +73,6 @@ const ProductsList = () => {
                     <h1>No items found</h1>
                 </ContainerNoItems>
             }
-            <Pagination isLightMode={isLightMode}>
-                <ReactPaginate
-                    breakLabel="..."
-                    nextLabel={((actualPage + 1) / pageCount) === 1 ? "" : ">"}
-                    onPageChange={({ selected }) => handlePageClick(selected)}
-                    pageRangeDisplayed={3}
-                    pageCount={pageCount}
-                    previousLabel={actualPage !== 0 ? "<" : ""}
-                    marginPagesDisplayed={3}
-                />
-            </Pagination>
         </ ContainerProductsList>
     );
 }

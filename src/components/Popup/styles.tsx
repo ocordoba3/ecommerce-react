@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { PRIMARY_COLOR, SECONDARY_COLOR, ThemeTypes } from "../../consts";
+import { GREY_COLOR, PRIMARY_COLOR, SECONDARY_COLOR, TERTIARY_COLOR, ThemeTypes } from "../../consts";
 
 export const ContainerPopup = styled.div<ThemeTypes>`
     bottom: 0;
@@ -11,7 +11,6 @@ export const ContainerPopup = styled.div<ThemeTypes>`
     top: 0;
     transition: opacity 500ms;
     overflow-x: hidden;
-    overflow-y: scroll;
     width: 100vw;
     z-index: 3;
     box-sizing: border-box;
@@ -41,12 +40,11 @@ export const ContainerPopup = styled.div<ThemeTypes>`
     }
 
     .popup .close svg:hover {
-        color: #ccc;
+        color: ${GREY_COLOR};
     }
 
     .popup .buttons {
         background-color: ${props => props.isLightMode ? SECONDARY_COLOR : PRIMARY_COLOR};
-        border-top: .4rem solid ${props => props.isLightMode ? PRIMARY_COLOR : SECONDARY_COLOR};
         display: flex;
         height: 10rem;
         justify-content: space-around;
@@ -74,13 +72,13 @@ export const ContainerPopup = styled.div<ThemeTypes>`
     }
 
     .popup .buttons .save button {
-        background-color: ${props => props.isLightMode ? PRIMARY_COLOR : SECONDARY_COLOR};
-        color: ${props => props.isLightMode ? SECONDARY_COLOR : PRIMARY_COLOR};
+        background-color: ${TERTIARY_COLOR};
+        color: ${SECONDARY_COLOR};
     }
 
     .popup .buttons .clear button {
-        background-color: ${props => props.isLightMode ? SECONDARY_COLOR : PRIMARY_COLOR};
-        border: .2rem solid ${props => props.isLightMode ? PRIMARY_COLOR : SECONDARY_COLOR};
+        background-color: transparent;
+        border: .2rem solid ${GREY_COLOR};
         color: ${props => props.isLightMode ? PRIMARY_COLOR : SECONDARY_COLOR};
     }
 `

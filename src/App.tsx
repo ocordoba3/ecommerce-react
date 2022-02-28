@@ -2,9 +2,9 @@ import React, { lazy, Suspense, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from './store/store';
 import { GlobalStyles } from './GlobalStyles';
+import { Loading } from './components/Loading/Loading';
 
 const Navbar = lazy(() => import('./components/Navbar/Navbar'));
-const PicOfTheDay = lazy(() => import('./components/PicOfTheDay/PicOfTheDay'));
 const Products = lazy(() => import('./components/Products/Products'));
 
 const App = () => {
@@ -19,18 +19,14 @@ const App = () => {
   }, [isModalOpen]);
 
   const renderLoader = () => (
-    <div className="container-pagination animate__animated animate__fadeIn">
-      <div className="containerInfo">
-        <h1>Loading...</h1>
-      </div>
-    </div>
+    <Loading></Loading>
   );
+
   return (
     <>
       <Suspense fallback={renderLoader()}>
         <GlobalStyles isLightMode={isLightMode} />
         <Navbar />
-        <PicOfTheDay />
         <Products />
       </Suspense>
     </>

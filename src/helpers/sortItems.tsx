@@ -1,21 +1,18 @@
-import { Product } from "../reducers/products/productsSlice";
-import { sortOrder, sortType } from "../reducers/ui/uiSlice";
+import { Product, sortOrder, sortType } from "../types";
 
 export const sortItems = (array: Array<Product>, sortBy: [sortOrder, sortType]) => {
     return array.sort((a, b) => {
-        const orderBy = sortBy[0];
+        const order = (sortBy[0] === 'asc') ? 1 : -1;
         const sortType = sortBy[1];
-        let order = (orderBy === 'asc') ? 1 : -1;
-        if (sortType === 'name') {
-            return (
-                a[sortType].toLowerCase() < b[sortType].toLowerCase()
-                    ? -1 * order : 1 * order
-            )
-        } else {
-            return (
-                a[sortType] < b[sortType]
-                    ? -1 * order : 1 * order
-            )
+        switch (sortType) {
+            case 'name':
+                return ( a.name.toLowerCase() < b.name.toLowerCase() ? -1 * order : 1 * order )
+            case 'price':
+                return (a.price < b.price ? -1 * order : 1 * order )
+            case 'createdAt':
+                return (new Date(a.createdAt) < new Date(b.createdAt) ? -1 * order : 1 * order )
+            default:
+                return 0;
         }
     });
 }

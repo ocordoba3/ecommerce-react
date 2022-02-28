@@ -1,26 +1,28 @@
 import styled from "styled-components";
-import { PRIMARY_COLOR, SECONDARY_COLOR, ThemeTypes } from "../../consts";
+import { PRIMARY_COLOR, SECONDARY_COLOR, TERTIARY_COLOR, ThemeTypes } from "../../consts";
 import { fadeIn } from "../styles/animations";
 
 export const ProductsCard = styled.div<ThemeTypes>`
+    ${fadeIn({})}
     margin: 0 auto 5rem auto;
     width: 30%;
 
     .imgContainer {
+        margin-bottom: 2rem;
         position: relative; 
         width: 100%;
     }
 
     .imgContainer .bestSeller {
-        background-color: ${props => props.isLightMode ? SECONDARY_COLOR : PRIMARY_COLOR};
-        color: ${props => props.isLightMode ? PRIMARY_COLOR : SECONDARY_COLOR};
+        background-color: ${TERTIARY_COLOR};
+        color: ${props => props.isLightMode ? SECONDARY_COLOR : PRIMARY_COLOR};
         font-size: 2rem;
         font-weight: 400;
         left: 0;
         position: absolute;
         padding: 0.5rem 2rem;
         top: 0;
-        z-index: 3;
+        z-index: 2;
     }
 
     .imgContainer img {
@@ -31,40 +33,33 @@ export const ProductsCard = styled.div<ThemeTypes>`
         z-index: 1;
     }
 
-    .imgContainer .cartButton {
-        background-color: #c2c0c010;
-        backdrop-filter: blur(12px);
+    .cartButton {
+        background-color: ${props => props.isLightMode ? PRIMARY_COLOR : SECONDARY_COLOR};;
         border: none;
         border-radius: 0;
-        bottom: 0.3rem;
-        color: ${SECONDARY_COLOR};
+        color: ${props => props.isLightMode ? SECONDARY_COLOR : PRIMARY_COLOR};;
         cursor: pointer;
-        display: none;
-        font-size: 2.3rem;
-        font-weight: 500;
-        height: 100%;
-        left: 0;
-        padding: 1rem 2rem;
-        position: absolute;
-        text-align: center;
+        font-size: 1.8rem;
+        font-weight: 900;
+        padding: 1.4rem auto;
         width: 100%;
-        z-index: 2;
     }
 
-    .imgContainer:hover>.cartButton {
-        display: block;
-        ${fadeIn({})}
+    h4 {
+        text-align: center;
     }
-
+    .productName {
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .bold {
+        font-weight: 900;
+    }
     @media screen and (max-width: 767px) {
         font-size: 3rem;
-        margin: 0 0 5rem 0;
-        width: 100%;
-
-        .imgContainer .cartButton {
-            display: block;
-            height: auto;
-        }
-        
+        margin: 2.5rem auto;
+        width: 45%;
     }
 `

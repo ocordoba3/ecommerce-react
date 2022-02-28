@@ -1,18 +1,18 @@
 import styled from 'styled-components';
-import { PRIMARY_COLOR, SECONDARY_COLOR, ThemeTypes } from '../../consts';
-import { fadeIn, fadeOut } from '../styles/animations';
+import { GREY_COLOR, PRIMARY_COLOR, SECONDARY_COLOR, TERTIARY_COLOR, ThemeTypes } from '../../consts';
+import { fadeIn } from '../styles/animations';
 
 
 export const Nav = styled.nav<ThemeTypes>`
     align-items: center;
     background-color: ${props => props.isLightMode ? SECONDARY_COLOR : PRIMARY_COLOR};
-    border-bottom: 0.3rem solid ${props => props.isLightMode ? PRIMARY_COLOR : SECONDARY_COLOR};
+    border-bottom: 0.3rem solid ${GREY_COLOR};
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     left: 0;
-    margin: 0 9rem;
-    padding:  3.3rem 0;
+    margin: 0;
+    padding:  3.3rem 10%;
     position: fixed;
     right: 0;
     top: 0;
@@ -27,7 +27,7 @@ export const Nav = styled.nav<ThemeTypes>`
 export const ButtonTheme = styled.label<ThemeTypes>`
     display: inline-block;
     height: 35px;
-    margin: 0 auto 0 1rem;
+    margin: 0 6rem 0 auto;
     position: relative;
     width: 70px;
 
@@ -40,6 +40,7 @@ export const ButtonTheme = styled.label<ThemeTypes>`
     & .slider {
         background-color: ${props => props.isLightMode ? SECONDARY_COLOR : PRIMARY_COLOR};
         border: .2rem solid ${props => props.isLightMode ? PRIMARY_COLOR : SECONDARY_COLOR};
+        border-radius: 2rem;
         bottom: 0;
         cursor: pointer;
         left: 0;
@@ -62,6 +63,7 @@ export const ButtonTheme = styled.label<ThemeTypes>`
     & :before {
         background-color: ${props => props.isLightMode ? PRIMARY_COLOR : SECONDARY_COLOR};
         bottom: 2px;
+        border-radius: 50%;
         content: "";
         height: 26px;
         left: ${props => props.isLightMode ? '4px' : '2px'};
@@ -75,7 +77,7 @@ export const ButtonTheme = styled.label<ThemeTypes>`
         transform: translateX(26px);
     }
     @media screen and (max-width: 767px) {
-        margin: 0 auto 0 3rem;
+        margin: 0 6rem 0 auto;
     }
 
 `
@@ -85,18 +87,14 @@ export const ContainerCart = styled.div`
 `
 
 export const CartBadge = styled.span<ThemeTypes>`
-    background-color: ${props => props.isLightMode ? PRIMARY_COLOR : SECONDARY_COLOR};
-    bottom: -3rem;
-    color: ${props => props.isLightMode ? SECONDARY_COLOR : PRIMARY_COLOR};
+    background-color: ${TERTIARY_COLOR};
+    border-radius: 50%;
+    color: ${PRIMARY_COLOR};
     font-size: 2rem;
-    padding: 0 .5rem;
+    padding: .2rem .7rem;
     position: absolute;
-    right: -.5rem;
-
-    @media screen and (max-width: 767px) {
-        bottom: -9.5rem;
-    }
-    
+    right: 0rem;
+    top: 0rem;    
 `
 
 export const CartIconContainer = styled.div<ThemeTypes>`
@@ -109,15 +107,6 @@ export const CartIconContainer = styled.div<ThemeTypes>`
         height: 3.8rem;
         width: 5.4rem;
     }
-
-    @media screen and (max-width: 767px) {
-        bottom: -8rem;
-        background-color: ${props => props.isLightMode ? PRIMARY_COLOR : SECONDARY_COLOR};
-        & svg {
-        color: ${props => props.isLightMode ? SECONDARY_COLOR : PRIMARY_COLOR};
-    }
-    }
-
 `
 export const CloseButton = styled.button<ThemeTypes>`
     background-color: ${props => props.isLightMode ? SECONDARY_COLOR : PRIMARY_COLOR};
@@ -130,30 +119,30 @@ export const CloseButton = styled.button<ThemeTypes>`
     width: auto;
     padding: .5rem;
     position: fixed;
-    right: 11rem;
-    top: 12rem;
+    right: 10.5%;
+    top: 9rem;
     & svg {
         height: 2rem;
         stroke-width: 5rem;
         width: 2rem;
     }
     @media screen and (max-width: 767px) {
-        right: 2rem;
-        top: 9rem;
+        right: 2.3rem;
+        top: 7.1rem;
     }
     
 `
 
 export const ItemsContainer = styled.div<ThemeTypes>`
-    ${props => props.isFadeIn ? fadeIn({}) : fadeOut({})};
     border: .3rem solid ${props => props.isLightMode ? PRIMARY_COLOR : SECONDARY_COLOR};
     background-color: ${props => props.isLightMode ? SECONDARY_COLOR : PRIMARY_COLOR};
     border-radius: 0;
-    height: calc(100vh - 10rem);
+    height: auto;
+    max-height: 60rem;
     overflow-y: scroll;
     position: absolute;
     right: 0;
-    top: 5rem;
+    top: 3rem;
     width: 44rem;
     z-index: 3;
 
@@ -165,9 +154,10 @@ export const ItemsContainer = styled.div<ThemeTypes>`
     }
 
     @media screen and (max-width: 767px) {
-        right: -2rem;
-        top: 3.7rem;
-        width: auto;
+        right: 0rem;
+        top: 2.7rem;
+        width: 30rem;
+        max-height: 50rem;
 
         & ul {
             padding: 1.5rem;
@@ -175,6 +165,7 @@ export const ItemsContainer = styled.div<ThemeTypes>`
     }
 `
 export const Items = styled.li<ThemeTypes>`
+    ${fadeIn({})};
     border-bottom: 1px solid ${props => props.isLightMode ? PRIMARY_COLOR : SECONDARY_COLOR};
     display: flex;
     font-size: 2rem;
@@ -198,36 +189,28 @@ export const ItemsInfo = styled.div<ThemeTypes>`
     & #ItemName {
         font-size: 1.6rem;
         font-weight: 700;
+        width: 100%;
+        margin-bottom: 0;
     }
     & #ItemPrice {
+        color: ${props => props.isLightMode ? PRIMARY_COLOR : SECONDARY_COLOR};
         font-size: 2.5rem;
         font-weight: 400;
-        color: ${props => props.isLightMode ? PRIMARY_COLOR : SECONDARY_COLOR};
+        width: 100%;
     }
 
-    @media screen and (max-width: 767px) {
-        width: 100%;
-        & #ItemName {
-            width: 100%;
-        }
-        & #ItemPrice {
-            width: 100%;
-        }
-        
-    }
+    @media screen and (max-width: 767px) { }
 `
 
 export const ItemsPhoto = styled.div`
     width: 50%;
     & img {
-        height: 8.6rem;
+        height: 16rem;
         object-fit: cover;
         width: 100%;
     }
 
-    @media screen and (max-width: 767px) {
-        width: 100%;
-    }
+    @media screen and (max-width: 767px) { }
     
 `
 export const ClearButton = styled.button<ThemeTypes>`

@@ -1,27 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-export type sortOrder = 'asc' | 'desc';
-export type sortType = 'name' | 'price';
-export type priceRange = 'low20' | '20-100' | '100-200' | 'more200';
-export type themeType = 'light' | 'dark';
+import { Ui } from '../../types';
 
 const themeStoraged = localStorage.getItem('isLightMode');
 const initialTheme = themeStoraged !== null ? JSON.parse(themeStoraged) : true;
-export interface Ui {
-    isModalOpen: boolean,
-    isCartOpen: boolean,
-    sortBy:[sortOrder, sortType],
-    categoryFilter: string[],
-    priceRange: Array<priceRange>,
-    theme: themeType,
-    isLightMode: boolean
-}
 
 const initialState: Ui = {
     isModalOpen: false,
     isCartOpen: false,
     sortBy: ['asc', 'price'],
-    categoryFilter: [],
+    colorFilter: [],
+    sizeFilter: [],
     priceRange: [],
     theme: 'light',
     isLightMode: initialTheme
@@ -40,8 +28,11 @@ export const uiSlice = createSlice({
         setSortyByFilters: (state, data: any) => {
             state.sortBy = data.payload;
         },
-        setCategoryFilters: (state, data: any) => {
-            state.categoryFilter = data.payload;
+        setColorFilters: (state, data: any) => {
+            state.colorFilter = data.payload;
+        },
+        setSizeFilters: (state, data: any) => {
+            state.sizeFilter = data.payload;
         },
         setPriceRange: (state, data: any) => {
             state.priceRange = data.payload;
@@ -58,6 +49,6 @@ export const uiSlice = createSlice({
     },
 })
 
-export const { setIsModalOpen, setIsCartOpen, setSortyByFilters, setCategoryFilters, setPriceRange, setTheme, setIsLightMode } = uiSlice.actions
+export const { setIsModalOpen, setIsCartOpen, setSortyByFilters, setColorFilters, setPriceRange, setTheme, setIsLightMode, setSizeFilters } = uiSlice.actions
 
 export default uiSlice.reducer

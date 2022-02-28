@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '../../reducers/cart/cartSlice';
-import { Product } from '../../reducers/products/productsSlice';
-import { setIsCartOpen } from '../../reducers/ui/uiSlice';
 import { RootState } from '../../store/store';
+import { addToCart } from '../../reducers/cart/cartSlice';
+import { setIsCartOpen } from '../../reducers/ui/uiSlice';
+import { Product } from '../../types';
 import { ProductsCard } from './styles';
 
 export const ProductCard = (product: Product) => {
@@ -24,12 +24,12 @@ export const ProductCard = (product: Product) => {
     return (
         <ProductsCard isLightMode={isLightMode}>
             <div className="imgContainer">
-                {product.bestseller && <span className="bestSeller">Best seller</span>}
+                {product.isOffer && <span className="bestSeller">Oferta</span>}
                 <img src={product.image.src} alt={product.image.alt} />
-                <button type="button" className="cartButton" onClick={() => handleAdd(product)}>ADD TO CART</button>
             </div>
-            <h2>{product.name}</h2>
-            <h3>${product.price}</h3>
+            <h4 className="productName">{product.name.toUpperCase()}</h4>
+            <h4 className="bold">${product.price} COP</h4>
+            <button type="button" className="cartButton" onClick={() => handleAdd(product)}>COMPRAR</button>
         </ProductsCard>
     )
 }

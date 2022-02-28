@@ -1,14 +1,14 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Filters } from '../Filters/Filters';
-import { setCategoryFilters, setIsModalOpen, setPriceRange } from '../../reducers/ui/uiSlice';
+import { setColorFilters, setIsModalOpen, setPriceRange } from '../../reducers/ui/uiSlice';
 import { AiOutlineClose } from 'react-icons/ai';
 import { ContainerPopup } from './styles';
 import { RootState } from '../../store/store';
 
 export const Popup = () => {
     const dispatch = useDispatch();
-    const {isLightMode} = useSelector((state: RootState) => state.ui)
+    const { isLightMode } = useSelector((state: RootState) => state.ui)
 
     const closePopup = () => {
         dispatch(setIsModalOpen(false));
@@ -16,7 +16,7 @@ export const Popup = () => {
     }
 
     const handleResetFilters = () => {
-        dispatch(setCategoryFilters([]));
+        dispatch(setColorFilters([]));
         dispatch(setPriceRange([]));
     }
 
@@ -27,11 +27,11 @@ export const Popup = () => {
                 <div className="close" onClick={() => closePopup()}><AiOutlineClose /></div>
                 <Filters />
                 <div className="buttons">
-                    <div className="clear">
-                        <button type="button" onClick={() => handleResetFilters()}>CLEAR</button>
-                    </div>
                     <div className="save">
-                        <button type="button" onClick={() => closePopup()}>SAVE</button>
+                        <button type="button" onClick={() => closePopup()}>APLICAR</button>
+                    </div>
+                    <div className="clear">
+                        <button type="button" onClick={() => handleResetFilters()}>LIMPIAR</button>
                     </div>
                 </div>
             </div>

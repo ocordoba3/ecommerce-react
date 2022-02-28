@@ -20,5 +20,5 @@ const fadeOutKeyFrame = keyframes`
         opacity: 0;
     }
 `
-export const fadeIn = ({time = '1s', type='ease'}: any) => css`animation: ${time} ${fadeInKeyFrame} ${type};`;
-export const fadeOut = ({time = '1s', type='ease'}: any) => css`animation: ${time} ${fadeOutKeyFrame} ${type};`;
+export const fadeIn = ({time = '.3s', type='ease'}: any) => css`animation: ${time} ${fadeInKeyFrame} ${type};`;
+export const fadeOut = ({time = '.5s', type='ease'}: any) => css`animation: ${time} ${fadeOutKeyFrame} ${type};`;

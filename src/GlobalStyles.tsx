@@ -3,9 +3,9 @@ import { PRIMARY_COLOR, SECONDARY_COLOR, ThemeTypes } from './consts';
 
 export const GlobalStyles = createGlobalStyle<ThemeTypes>`
     * {
+        box-sizing: border-box;
         font-size: 62.5%;
         margin: 0;
-        box-sizing: border-box;
     }
 
     body {
